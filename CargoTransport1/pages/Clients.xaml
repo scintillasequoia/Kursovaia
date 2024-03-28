@@ -1,0 +1,103 @@
+﻿
+<Page x:Class="CargoTransport1.pages.Clients"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CargoTransport1.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Customers" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition x:Name="ClientsColumnChange" Width="300" MaxWidth="280"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Клиенты" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="26" FontWeight="ExtraBold"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+            <Button x:Name="ClientAdd" Content="Добавить" 
+                    Height="30" Width="100" Padding="5,5,5,5" Margin="5,5,0,5"
+                    Click="ClientAdd_Click"/>
+            <Button x:Name="ClientCopy" Content="Копировать" 
+                    Height="30" Width="100" Padding="5,5,5,5" Margin="5,5,0,5"
+                    Click="ClientCopy_Click"/>
+            <Button x:Name="ClientEdit" Content="Изменить" 
+                    Height="30" Width="100" Padding="5,5,5,5" Margin="5,5,0,5"
+                    Click="ClientEdit_Click"/>
+            <Button x:Name="ClientDellete" Content="Удалить" 
+                    Height="30" Width="100" Padding="5,5,5,5" Margin="5,5,0,5"
+                    Click="ClientDelete_Click"/>
+            <Label Content="|" FontSize="24" FontWeight="Bold" Foreground="Gray" Margin="15,0,0,0"/>
+            <ComboBox x:Name="ClientFilterComboBox" Width="150" Height="30" Margin="15,0,0,0"/>
+            <TextBox x:Name="ClientFilterTextBox" Margin="5,0,5,0" Width="170" Height="30"
+                     TextChanged="FilterTextBox_TextChanged"/>
+        </StackPanel>
+        <DockPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <DataGrid x:Name= "ClientsGrid" AutoGenerateColumns="False" CanUserAddRows="False"
+                      SelectionChanged="CallEvent">
+                <DataGrid.Columns>
+                    <!--1-ый способ-->
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding Path=Cl_F}" Width="10*"/>
+                    <DataGridTextColumn Header="Имя" Binding="{Binding Path=Cl_I}" Width="10*"/>
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding Path=Cl_O}" Width="10*"/>
+                    <DataGridTextColumn Header="Адресс" Binding="{Binding Path=Cl_Adress}" Width="10*"/>
+                    <DataGridTextColumn Header="Телефон" Binding="{Binding Path=Cl_Phone}" Width="10*"/>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </DockPanel>
+        <GridSplitter Grid.Column="1" Grid.Row="2" Width="3" HorizontalAlignment="Stretch" />
+        <ScrollViewer Grid.Row="2" Grid.Column="2">
+            <StackPanel  Orientation="Vertical">
+                <Label x:Name="ClientsLabel" Content="Добавить книгу" FontSize="16" FontWeight="Bold" Margin="5,0,0,0"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Имя" Margin="5,0,0,0" Width="100"/>
+                    <TextBox x:Name="ClientF" 
+                Text="{Binding ElementName=ClientsGrid, Path=SelectedItem.Cl_F}" Width="150" Height="35" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label Content="Фамилия" Margin="5,0,0,0" Width="100"/>
+                    <TextBox x:Name="ClientI" 
+                Text="{Binding ElementName=ClientsGrid, Path=SelectedItem.Cl_I}" Width="150" Height="35" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label Content="Отчество" Margin="5,0,0,0" Width="100"/>
+                    <TextBox x:Name="ClientO" 
+                Text="{Binding ElementName=ClientsGrid, Path=SelectedItem.Cl_O}" Width="150" Height="35" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label Content="Адресс" Margin="5,0,0,0" Width="100"/>
+                    <TextBox x:Name="ClientAdress" 
+                Text="{Binding ElementName=ClientsGrid, Path=SelectedItem.Cl_Adress}" Width="150" Height="35" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label Content="Телефон" Margin="5,0,0,0" Width="100"/>
+                    <TextBox x:Name="ClientPhone" 
+                Text="{Binding ElementName=ClientsGrid, Path=SelectedItem.Cl_Phone}"
+                     Width="150" Height="35" Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                    <Button x:Name="ClientAddCommit" Content="Добавить книгу" 
+                        Height="30" Width="120" Padding="5,5,5,5" Margin="5,5,0,5" Click="ClientAddCommit_Click"/>
+                    <Button x:Name="ClientAddRollback" Content="Отменить" 
+                        Height="30" Width="120" Padding="5,5,5,5" Margin="5,5,0,5" Click="ClientAddRollback_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+        <!--<Button x:Name="ClientAddButton" Content="Добавить" Height="30" Width="100" Padding="5,5,5,5" Margin="5,5,0,5" Click="ClientAdd_Click"/>
+        <Button x:Name="ClientCopyButton" Content="Изменить" Height="30" Width="100" Padding="5,5,5,5" Margin="5,5,0,5" Click="ClientEdit_Click"/>-->
+    </Grid>
+</Page>

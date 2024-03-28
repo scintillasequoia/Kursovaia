@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище CargoTransport12ModelContainer" CdmEntityContainer="CargoTransport12Entities">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="CargoTransport12Model.Accounts">
+        <MappingFragment StoreEntitySet="Accounts">
+          <ScalarProperty Name="Acc_ID" ColumnName="Acc_ID" />
+          <ScalarProperty Name="Acc_Login" ColumnName="Acc_Login" />
+          <ScalarProperty Name="Acc_Password" ColumnName="Acc_Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cars">
+      <EntityTypeMapping TypeName="CargoTransport12Model.Cars">
+        <MappingFragment StoreEntitySet="Cars">
+          <ScalarProperty Name="Car_ID" ColumnName="Car_ID" />
+          <ScalarProperty Name="Car_RegNumber" ColumnName="Car_RegNumber" />
+          <ScalarProperty Name="Mdl_ID" ColumnName="Mdl_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="CargoTransport12Model.Clients">
+        <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="Cl_ID" ColumnName="Cl_ID" />
+          <ScalarProperty Name="Cl_F" ColumnName="Cl_F" />
+          <ScalarProperty Name="Cl_I" ColumnName="Cl_I" />
+          <ScalarProperty Name="Cl_O" ColumnName="Cl_O" />
+          <ScalarProperty Name="Cl_Adress" ColumnName="Cl_Adress" />
+          <ScalarProperty Name="Cl_Phone" ColumnName="Cl_Phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Deliveries">
+      <EntityTypeMapping TypeName="CargoTransport12Model.Deliveries">
+        <MappingFragment StoreEntitySet="Deliveries">
+          <ScalarProperty Name="Del_ID" ColumnName="Del_ID" />
+          <ScalarProperty Name="Dr_ID" ColumnName="Dr_ID" />
+          <ScalarProperty Name="Car_ID" ColumnName="Car_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Drivers">
+      <EntityTypeMapping TypeName="CargoTransport12Model.Drivers">
+        <MappingFragment StoreEntitySet="Drivers">
+          <ScalarProperty Name="Dr_ID" ColumnName="Dr_ID" />
+          <ScalarProperty Name="Dr_F" ColumnName="Dr_F" />
+          <ScalarProperty Name="Dr_I" ColumnName="Dr_I" />
+          <ScalarProperty Name="Dr_O" ColumnName="Dr_O" />
+          <ScalarProperty Name="Dr_Adress" ColumnName="Dr_Adress" />
+          <ScalarProperty Name="Dr_Phone" ColumnName="Dr_Phone" />
+          <ScalarProperty Name="Dr_License" ColumnName="Dr_License" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Models">
+      <EntityTypeMapping TypeName="CargoTransport12Model.Models">
+        <MappingFragment StoreEntitySet="Models">
+          <ScalarProperty Name="Mdl_ID" ColumnName="Mdl_ID" />
+          <ScalarProperty Name="Mdl_Name" ColumnName="Mdl_Name" />
+          <ScalarProperty Name="Mdl_CarrindCapacity" ColumnName="Mdl_CarrindCapacity" />
+          <ScalarProperty Name="Mdl_FuelConsumption" ColumnName="Mdl_FuelConsumption" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="CargoTransport12Model.Orders">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Ord_ID" ColumnName="Ord_ID" />
+          <ScalarProperty Name="Cl_ID" ColumnName="Cl_ID" />
+          <ScalarProperty Name="Del_ID" ColumnName="Del_ID" />
+          <ScalarProperty Name="Ord_DateStart" ColumnName="Ord_DateStart" />
+          <ScalarProperty Name="Ord_DateEnd" ColumnName="Ord_DateEnd" />
+          <ScalarProperty Name="Ord_PlaceStart" ColumnName="Ord_PlaceStart" />
+          <ScalarProperty Name="Ord_PlaceEnd" ColumnName="Ord_PlaceEnd" />
+          <ScalarProperty Name="Ord_Price" ColumnName="Ord_Price" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="Package" ColumnName="Package" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

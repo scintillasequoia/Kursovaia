@@ -1,0 +1,49 @@
+﻿<Window x:Class="CargoTransport1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CargoTransport1"
+        mc:Ignorable="d"
+        Title="Cargo transport" 
+        Height="600" Width="1000" 
+        MinHeight="250" MinWidth="610"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110" MinWidth="110" MaxWidth="250"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*" MinWidth="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Background="Beige" >
+            <Label x:Name="RoleLabel" Content="Администратор" 
+                   FontWeight="Bold" FontSize="10" HorizontalContentAlignment="Center"/>
+            <Button x:Name="ClientsButton" Content="Клиенты" Height="25" 
+                    Margin="5,5,5,0" Click="ClientsButton_Click"/>
+            <Button x:Name="DriversButton" Content="Водители" Height="25" 
+                    Margin="5,5,5,0" Click="DriversButton_Click"/>
+            <Button x:Name="ModelsButton" Content="Модели машин" Height="25"
+                    Margin="5,5,5,0" Click="ModelsButton_Click"/>
+            <Button x:Name="CarsButton" Content="Машины" Height="25"
+                    Margin="5,5,5,0" Click="CarsButton_Click"/>
+            <Button x:Name="OrdersButton" Content="Заказы" Height="25"
+                    Margin="5,5,5,0" Click="OrdersButton_Click"/>
+            <Button x:Name="Orders_DeliverisButton" Content="Доставки" Height="25"
+                    Margin="5,5,5,0" Click="Orders_DeliverisButton_Click"/>
+            <Button x:Name="CreateDeliveryButton" Content="Создать доставку" Height="25"
+                    Margin="5,5,5,0" Click="CreateDeliveryButton_Click"/>
+        </StackPanel>
+        <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" 
+                      Width="3" HorizontalAlignment="Stretch" />
+        <Frame x:Name="TransportFrame" NavigationUIVisibility="Hidden" Grid.Row="0" Grid.Column="2"/>
+        <Rectangle Grid.Column="2" Grid.Row="1" Fill="Beige" />
+
+
+    </Grid>
+</Window>
+

@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище CargoTransport12Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="Acc_ID" />
+          </Key>
+          <Property Name="Acc_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Acc_Login" Type="varchar" MaxLength="30" />
+          <Property Name="Acc_Password" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="Car_ID" />
+          </Key>
+          <Property Name="Car_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Car_RegNumber" Type="varchar" MaxLength="30" />
+          <Property Name="Mdl_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Cl_ID" />
+          </Key>
+          <Property Name="Cl_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cl_F" Type="varchar" MaxLength="30" />
+          <Property Name="Cl_I" Type="varchar" MaxLength="30" />
+          <Property Name="Cl_O" Type="varchar" MaxLength="30" />
+          <Property Name="Cl_Adress" Type="varchar" MaxLength="150" />
+          <Property Name="Cl_Phone" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Deliveries">
+          <Key>
+            <PropertyRef Name="Del_ID" />
+          </Key>
+          <Property Name="Del_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dr_ID" Type="int" Nullable="false" />
+          <Property Name="Car_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Drivers">
+          <Key>
+            <PropertyRef Name="Dr_ID" />
+          </Key>
+          <Property Name="Dr_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dr_F" Type="varchar" MaxLength="30" />
+          <Property Name="Dr_I" Type="varchar" MaxLength="30" />
+          <Property Name="Dr_O" Type="varchar" MaxLength="30" />
+          <Property Name="Dr_Adress" Type="varchar" MaxLength="150" />
+          <Property Name="Dr_Phone" Type="varchar" MaxLength="30" />
+          <Property Name="Dr_License" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Models">
+          <Key>
+            <PropertyRef Name="Mdl_ID" />
+          </Key>
+          <Property Name="Mdl_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Mdl_Name" Type="varchar" MaxLength="30" />
+          <Property Name="Mdl_CarrindCapacity" Type="int" />
+          <Property Name="Mdl_FuelConsumption" Type="int" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Ord_ID" />
+          </Key>
+          <Property Name="Ord_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cl_ID" Type="int" Nullable="false" />
+          <Property Name="Del_ID" Type="int" Nullable="false" />
+          <Property Name="Ord_DateStart" Type="date" />
+          <Property Name="Ord_DateEnd" Type="date" />
+          <Property Name="Ord_PlaceStart" Type="varchar" MaxLength="150" />
+          <Property Name="Ord_PlaceEnd" Type="varchar" MaxLength="150" />
+          <Property Name="Ord_Price" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="Distance" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="Package" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="Fk1_Cars">
+          <End Role="Models" Type="Self.Models" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Models">
+              <PropertyRef Name="Mdl_ID" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="Mdl_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk1_Deliveries">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="Dr_ID" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="Dr_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk1_Orders">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Cl_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Cl_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk2_Deliveries">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Car_ID" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="Car_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk2_Orders">
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Deliveries">
+              <PropertyRef Name="Del_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Del_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище CargoTransport12ModelContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deliveries" EntityType="Self.Deliveries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Models" EntityType="Self.Models" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Fk1_Cars" Association="Self.Fk1_Cars">
+            <End Role="Models" EntitySet="Models" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="Fk1_Deliveries" Association="Self.Fk1_Deliveries">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="Fk1_Orders" Association="Self.Fk1_Orders">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="Fk2_Deliveries" Association="Self.Fk2_Deliveries">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="Fk2_Orders" Association="Self.Fk2_Orders">
+            <End Role="Deliveries" EntitySet="Deliveries" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CargoTransport12Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="Acc_ID" />
+          </Key>
+          <Property Name="Acc_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Acc_Login" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Acc_Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="Car_ID" />
+          </Key>
+          <Property Name="Car_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Car_RegNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Mdl_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Models" Relationship="Self.Fk1_Cars" FromRole="Cars" ToRole="Models" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.Fk2_Deliveries" FromRole="Cars" ToRole="Deliveries" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Cl_ID" />
+          </Key>
+          <Property Name="Cl_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cl_F" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Cl_I" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Cl_O" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Cl_Adress" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Cl_Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.Fk1_Orders" FromRole="Clients" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Deliveries">
+          <Key>
+            <PropertyRef Name="Del_ID" />
+          </Key>
+          <Property Name="Del_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dr_ID" Type="Int32" Nullable="false" />
+          <Property Name="Car_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.Fk2_Deliveries" FromRole="Deliveries" ToRole="Cars" />
+          <NavigationProperty Name="Drivers" Relationship="Self.Fk1_Deliveries" FromRole="Deliveries" ToRole="Drivers" />
+          <NavigationProperty Name="Orders" Relationship="Self.Fk2_Orders" FromRole="Deliveries" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Drivers">
+          <Key>
+            <PropertyRef Name="Dr_ID" />
+          </Key>
+          <Property Name="Dr_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dr_F" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Dr_I" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Dr_O" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Dr_Adress" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Dr_Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Dr_License" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.Fk1_Deliveries" FromRole="Drivers" ToRole="Deliveries" />
+        </EntityType>
+        <EntityType Name="Models">
+          <Key>
+            <PropertyRef Name="Mdl_ID" />
+          </Key>
+          <Property Name="Mdl_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Mdl_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Mdl_CarrindCapacity" Type="Int32" />
+          <Property Name="Mdl_FuelConsumption" Type="Int32" />
+          <NavigationProperty Name="Cars" Relationship="Self.Fk1_Cars" FromRole="Models" ToRole="Cars" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Ord_ID" />
+          </Key>
+          <Property Name="Ord_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cl_ID" Type="Int32" Nullable="false" />
+          <Property Name="Del_ID" Type="Int32" Nullable="false" />
+          <Property Name="Ord_DateStart" Type="DateTime" Precision="0" />
+          <Property Name="Ord_DateEnd" Type="DateTime" Precision="0" />
+          <Property Name="Ord_PlaceStart" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Ord_PlaceEnd" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Ord_Price" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="Distance" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="Package" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.Fk1_Orders" FromRole="Orders" ToRole="Clients" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.Fk2_Orders" FromRole="Orders" ToRole="Deliveries" />
+        </EntityType>
+        <Association Name="Fk1_Cars">
+          <End Role="Models" Type="Self.Models" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Models">
+              <PropertyRef Name="Mdl_ID" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="Mdl_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk2_Deliveries">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="Car_ID" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="Car_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk1_Orders">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Cl_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Cl_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk1_Deliveries">
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drivers">
+              <PropertyRef Name="Dr_ID" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="Dr_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk2_Orders">
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Deliveries">
+              <PropertyRef Name="Del_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Del_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CargoTransport12Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" />
+          <EntitySet Name="Cars" EntityType="Self.Cars" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Deliveries" EntityType="Self.Deliveries" />
+          <EntitySet Name="Drivers" EntityType="Self.Drivers" />
+          <EntitySet Name="Models" EntityType="Self.Models" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <AssociationSet Name="Fk1_Cars" Association="Self.Fk1_Cars">
+            <End Role="Models" EntitySet="Models" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="Fk2_Deliveries" Association="Self.Fk2_Deliveries">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="Fk1_Orders" Association="Self.Fk1_Orders">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="Fk1_Deliveries" Association="Self.Fk1_Deliveries">
+            <End Role="Drivers" EntitySet="Drivers" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="Fk2_Orders" Association="Self.Fk2_Orders">
+            <End Role="Deliveries" EntitySet="Deliveries" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CargoTransport12ModelContainer" CdmEntityContainer="CargoTransport12Entities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="CargoTransport12Model.Accounts">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="Acc_ID" ColumnName="Acc_ID" />
+                <ScalarProperty Name="Acc_Login" ColumnName="Acc_Login" />
+                <ScalarProperty Name="Acc_Password" ColumnName="Acc_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cars">
+            <EntityTypeMapping TypeName="CargoTransport12Model.Cars">
+              <MappingFragment StoreEntitySet="Cars">
+                <ScalarProperty Name="Car_ID" ColumnName="Car_ID" />
+                <ScalarProperty Name="Car_RegNumber" ColumnName="Car_RegNumber" />
+                <ScalarProperty Name="Mdl_ID" ColumnName="Mdl_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="CargoTransport12Model.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Cl_ID" ColumnName="Cl_ID" />
+                <ScalarProperty Name="Cl_F" ColumnName="Cl_F" />
+                <ScalarProperty Name="Cl_I" ColumnName="Cl_I" />
+                <ScalarProperty Name="Cl_O" ColumnName="Cl_O" />
+                <ScalarProperty Name="Cl_Adress" ColumnName="Cl_Adress" />
+                <ScalarProperty Name="Cl_Phone" ColumnName="Cl_Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deliveries">
+            <EntityTypeMapping TypeName="CargoTransport12Model.Deliveries">
+              <MappingFragment StoreEntitySet="Deliveries">
+                <ScalarProperty Name="Del_ID" ColumnName="Del_ID" />
+                <ScalarProperty Name="Dr_ID" ColumnName="Dr_ID" />
+                <ScalarProperty Name="Car_ID" ColumnName="Car_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drivers">
+            <EntityTypeMapping TypeName="CargoTransport12Model.Drivers">
+              <MappingFragment StoreEntitySet="Drivers">
+                <ScalarProperty Name="Dr_ID" ColumnName="Dr_ID" />
+                <ScalarProperty Name="Dr_F" ColumnName="Dr_F" />
+                <ScalarProperty Name="Dr_I" ColumnName="Dr_I" />
+                <ScalarProperty Name="Dr_O" ColumnName="Dr_O" />
+                <ScalarProperty Name="Dr_Adress" ColumnName="Dr_Adress" />
+                <ScalarProperty Name="Dr_Phone" ColumnName="Dr_Phone" />
+                <ScalarProperty Name="Dr_License" ColumnName="Dr_License" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Models">
+            <EntityTypeMapping TypeName="CargoTransport12Model.Models">
+              <MappingFragment StoreEntitySet="Models">
+                <ScalarProperty Name="Mdl_ID" ColumnName="Mdl_ID" />
+                <ScalarProperty Name="Mdl_Name" ColumnName="Mdl_Name" />
+                <ScalarProperty Name="Mdl_CarrindCapacity" ColumnName="Mdl_CarrindCapacity" />
+                <ScalarProperty Name="Mdl_FuelConsumption" ColumnName="Mdl_FuelConsumption" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="CargoTransport12Model.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Ord_ID" ColumnName="Ord_ID" />
+                <ScalarProperty Name="Cl_ID" ColumnName="Cl_ID" />
+                <ScalarProperty Name="Del_ID" ColumnName="Del_ID" />
+                <ScalarProperty Name="Ord_DateStart" ColumnName="Ord_DateStart" />
+                <ScalarProperty Name="Ord_DateEnd" ColumnName="Ord_DateEnd" />
+                <ScalarProperty Name="Ord_PlaceStart" ColumnName="Ord_PlaceStart" />
+                <ScalarProperty Name="Ord_PlaceEnd" ColumnName="Ord_PlaceEnd" />
+                <ScalarProperty Name="Ord_Price" ColumnName="Ord_Price" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="Package" ColumnName="Package" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

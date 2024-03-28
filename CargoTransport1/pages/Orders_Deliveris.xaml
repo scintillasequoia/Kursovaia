@@ -1,0 +1,94 @@
+﻿<Page x:Class="CargoTransport1.pages.Orders_Deliveris"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CargoTransport1.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Orders_Deliveris" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" MinWidth="200"/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition Width="*" MinWidth="200"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Доставки" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="26" FontWeight="ExtraBold"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+            <Button x:Name="ClientAdd" Content="Добавить" 
+                    Height="30" Width="100" Padding="5,5,5,5" Margin="5,5,0,5"
+                    Click="ClientAdd_Click"/>
+            <Button x:Name="ClientDellete" Content="Удалить" 
+                    Height="30" Width="100" Padding="5,5,5,5" Margin="5,5,0,5"
+                    Click="ClientDelete_Click"/>
+            <Label Content="|" FontSize="24" FontWeight="Bold" Foreground="Gray" Margin="15,0,0,0"/>
+            <ComboBox x:Name="ClientFilterComboBox" Width="150" Height="30" Margin="15,0,0,0"/>
+            <TextBox x:Name="ClientFilterTextBox" Margin="5,0,5,0" Width="170" Height="30"
+                     TextChanged="FilterTextBox_TextChanged"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button Content="Закрыть доставку" Click="CloseDelivery_Click"></Button>
+            <DockPanel>
+                <DataGrid x:Name= "DeliveriesGrid" AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          SelectionChanged="DeliveriesGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Идентификатор" Binding="{Binding Path=Del_ID}" Width="10*"/>
+                        <DataGridTextColumn  Header="Водитель" Width="10*">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                    <Binding Path="Drivers.Dr_F"/>
+                                    <Binding Path="Drivers.Dr_I"/>
+                                    <Binding Path="Drivers.Dr_O"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Модель машины" Binding="{Binding Path=Cars.Models.Mdl_Name}" Width="10*"/>
+                        <DataGridTemplateColumn Header="Управление">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Закрыть." Width="30" Margin="5,0,5,0"
+                                            FontSize="8" Click="CloseDelivery_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </DockPanel>
+            
+
+        </StackPanel>
+        <GridSplitter Grid.Column="1" Grid.Row="2" Width="3" HorizontalAlignment="Stretch" />
+        <DataGrid x:Name="OrdersGrid" ItemsSource ="{Binding ElementName=DeliveriesGrid, Path =SelectedItem.Orders}"  Grid.Row="2" Grid.Column="2" AutoGenerateColumns="False" CanUserAddRows="False" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn  Header="Имя клиента" Width="10*">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                            <Binding Path="Clients.Cl_F"/>
+                            <Binding Path="Clients.Cl_I"/>
+                            <Binding Path="Clients.Cl_O"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Дата оформления" Binding="{Binding Path=Ord_DateStart, StringFormat=\{0:dd.MM.yyyy\}}" Width="80"/>
+                <DataGridTextColumn Header="Дата получения" Binding="{Binding Path=Ord_DateEnd, StringFormat=\{0:dd.MM.yyyy\}}" Width="90"/>
+                <DataGridTextColumn Header="Место оформления" Binding="{Binding Path=Ord_PlaceStart}" Width="10*"/>
+                <DataGridTextColumn Header="Место получения" Binding="{Binding Path=Ord_PlaceEnd}" Width="10*"/>
+                <DataGridTextColumn Header="Расстояние" Binding="{Binding Path=Distance}" Width="10*"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Path=Ord_Price}" Width="10*"/>
+                <DataGridTextColumn Header="Сообщение" Binding="{Binding Path=Package}" Width="10*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Page>

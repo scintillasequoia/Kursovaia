@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище CargoTransport12Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="Acc_ID" />
+    </Key>
+    <Property Name="Acc_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Acc_Login" Type="varchar" MaxLength="30" />
+    <Property Name="Acc_Password" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Cars">
+    <Key>
+      <PropertyRef Name="Car_ID" />
+    </Key>
+    <Property Name="Car_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Car_RegNumber" Type="varchar" MaxLength="30" />
+    <Property Name="Mdl_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="Cl_ID" />
+    </Key>
+    <Property Name="Cl_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cl_F" Type="varchar" MaxLength="30" />
+    <Property Name="Cl_I" Type="varchar" MaxLength="30" />
+    <Property Name="Cl_O" Type="varchar" MaxLength="30" />
+    <Property Name="Cl_Adress" Type="varchar" MaxLength="150" />
+    <Property Name="Cl_Phone" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Deliveries">
+    <Key>
+      <PropertyRef Name="Del_ID" />
+    </Key>
+    <Property Name="Del_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dr_ID" Type="int" Nullable="false" />
+    <Property Name="Car_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Drivers">
+    <Key>
+      <PropertyRef Name="Dr_ID" />
+    </Key>
+    <Property Name="Dr_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dr_F" Type="varchar" MaxLength="30" />
+    <Property Name="Dr_I" Type="varchar" MaxLength="30" />
+    <Property Name="Dr_O" Type="varchar" MaxLength="30" />
+    <Property Name="Dr_Adress" Type="varchar" MaxLength="150" />
+    <Property Name="Dr_Phone" Type="varchar" MaxLength="30" />
+    <Property Name="Dr_License" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Models">
+    <Key>
+      <PropertyRef Name="Mdl_ID" />
+    </Key>
+    <Property Name="Mdl_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Mdl_Name" Type="varchar" MaxLength="30" />
+    <Property Name="Mdl_CarrindCapacity" Type="int" />
+    <Property Name="Mdl_FuelConsumption" Type="int" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Ord_ID" />
+    </Key>
+    <Property Name="Ord_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cl_ID" Type="int" Nullable="false" />
+    <Property Name="Del_ID" Type="int" Nullable="false" />
+    <Property Name="Ord_DateStart" Type="date" />
+    <Property Name="Ord_DateEnd" Type="date" />
+    <Property Name="Ord_PlaceStart" Type="varchar" MaxLength="150" />
+    <Property Name="Ord_PlaceEnd" Type="varchar" MaxLength="150" />
+    <Property Name="Ord_Price" Type="decimal" Precision="15" Scale="2" />
+    <Property Name="Distance" Type="decimal" Precision="15" Scale="2" />
+    <Property Name="Package" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <Association Name="Fk1_Cars">
+    <End Role="Models" Type="Self.Models" Multiplicity="1" />
+    <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Models">
+        <PropertyRef Name="Mdl_ID" />
+      </Principal>
+      <Dependent Role="Cars">
+        <PropertyRef Name="Mdl_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk1_Deliveries">
+    <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+    <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drivers">
+        <PropertyRef Name="Dr_ID" />
+      </Principal>
+      <Dependent Role="Deliveries">
+        <PropertyRef Name="Dr_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk1_Orders">
+    <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="Cl_ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Cl_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk2_Deliveries">
+    <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+    <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cars">
+        <PropertyRef Name="Car_ID" />
+      </Principal>
+      <Dependent Role="Deliveries">
+        <PropertyRef Name="Car_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk2_Orders">
+    <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deliveries">
+        <PropertyRef Name="Del_ID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Del_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище CargoTransport12ModelContainer">
+    <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Deliveries" EntityType="Self.Deliveries" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Models" EntityType="Self.Models" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="Fk1_Cars" Association="Self.Fk1_Cars">
+      <End Role="Models" EntitySet="Models" />
+      <End Role="Cars" EntitySet="Cars" />
+    </AssociationSet>
+    <AssociationSet Name="Fk1_Deliveries" Association="Self.Fk1_Deliveries">
+      <End Role="Drivers" EntitySet="Drivers" />
+      <End Role="Deliveries" EntitySet="Deliveries" />
+    </AssociationSet>
+    <AssociationSet Name="Fk1_Orders" Association="Self.Fk1_Orders">
+      <End Role="Clients" EntitySet="Clients" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="Fk2_Deliveries" Association="Self.Fk2_Deliveries">
+      <End Role="Cars" EntitySet="Cars" />
+      <End Role="Deliveries" EntitySet="Deliveries" />
+    </AssociationSet>
+    <AssociationSet Name="Fk2_Orders" Association="Self.Fk2_Orders">
+      <End Role="Deliveries" EntitySet="Deliveries" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
